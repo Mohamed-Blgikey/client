@@ -1,9 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Product } from 'src/app/shared/models/Product';
 import { ShopService } from '../shop.service';
-import { Brand } from 'src/app/shared/models/brand';
-import { Type } from 'src/app/shared/models/type';
 import { ShopParams } from 'src/app/shared/models/shop-params';
+import { Type } from 'src/app/shared/models/type';
+import { Product } from 'src/app/shared/models/Product';
+import { Brand } from 'src/app/shared/models/brand';
 
 @Component({
   selector: 'app-shop',
@@ -37,7 +37,7 @@ export class ShopComponent implements OnInit {
 
 
   private getProudct(){
-    this._shopServices.getProudct(this.ShopParams).subscribe({
+    this._shopServices.getProudcts(this.ShopParams).subscribe({
       next:(res)=>{
         this.products = res.items;
         this.ShopParams.PageNumber = res.pageIndex;
@@ -97,7 +97,6 @@ export class ShopComponent implements OnInit {
 
     if (this.ShopParams.PageNumber!=event.page) {
       this.ShopParams.PageNumber = event.page;
-      this.ShopParams.PageNumber = 1;
       this.getProudct();
     }
   }
