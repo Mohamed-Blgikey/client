@@ -6,13 +6,14 @@ import { Paging } from '../shared/models/paging';
 import { ShopParams } from '../shared/models/shop-params';
 import { Brand } from '../shared/models/brand';
 import { Type } from '../shared/models/type';
+import { BaseUrl } from '../shared/models/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShopService {
 
-  BaseUrl:string="https://localhost:44397/api/";
+  BaseUrl=BaseUrl;
   constructor(private _http:HttpClient) { }
 
   getProudcts(ShopParams:ShopParams):Observable<Paging<Product[]>>{
