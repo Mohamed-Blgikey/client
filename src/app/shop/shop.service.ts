@@ -7,6 +7,7 @@ import { ShopParams } from '../shared/models/shop-params';
 import { Brand } from '../shared/models/brand';
 import { Type } from '../shared/models/type';
 import { BaseUrl } from '../shared/models/environment';
+import { BusyService } from '../core/services/busy.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ import { BaseUrl } from '../shared/models/environment';
 export class ShopService {
 
   BaseUrl=BaseUrl;
-  constructor(private _http:HttpClient) { }
+  constructor(private _http:HttpClient,private loadService:BusyService) { }
 
   getProudcts(ShopParams:ShopParams):Observable<Paging<Product[]>>{
     let params = new HttpParams();
@@ -24,16 +25,20 @@ export class ShopService {
     params = params.append("pageIndex",ShopParams.PageNumber)
     params = params.append("pageSize",ShopParams.PageSize)
     params = params.append("sort",ShopParams.Sort);
+    this.loadService.busy()
 
     return this._http.get<Paging<Product[]>>(`${this.BaseUrl}GetProducts`,{params:params});
   }
   getBrands():Observable<Brand[]>{
+    this.loadService.busy()
     return this._http.get<Brand[]>(`${this.BaseUrl}GetProductBrands`);
   }
   getTypes():Observable<Type[]>{
+    this.loadService.busy()
     return this._http.get<Type[]>(`${this.BaseUrl}GetProductTypes`);
   }
   getProudct(id:number):Observable<Product>{
+    this.loadService.busy()
     return this._http.get<Product>(`${this.BaseUrl}GetProduct/${id}`);
   }
 }
