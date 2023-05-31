@@ -1,3 +1,4 @@
+import { BasketService } from './basket/basket.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Product } from './shared/models/Product';
@@ -14,20 +15,10 @@ export class AppComponent implements OnInit {
    *
    */
   Product:Product[]=[];
-  constructor(private _http:HttpClient) {  }
+  constructor(private _http:HttpClient,private _BasketService:BasketService) {  }
   ngOnInit(): void {
-    this._http.get<Paging<Product[]>>("https://localhost:44397/api/GetProducts?pagesize=3&pageindex=2").subscribe({
-      next:(res)=>{
-        this.Product = res.items;
-      },
-      error:(err)=>{
-        console.log(err);
-      },
-      complete:()=>{
-        console.log("Complete");
+    this._BasketService.basketSource$.subscribe(res=>{
+    })
 
-      }
-    }
-    )
   }
 }
