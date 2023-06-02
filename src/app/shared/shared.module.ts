@@ -6,7 +6,7 @@ import { PaginHeaderComponent } from './pagin-header/pagin-header.component'
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { OrderTotalsComponent } from './order-totals/order-totals.component';
 import { BasketSammaryComponent } from './basket-sammary/basket-sammary.component'
-
+import {BsDropdownModule} from 'ngx-bootstrap/dropdown'
 
 @NgModule({
   declarations: [
@@ -18,7 +18,9 @@ import { BasketSammaryComponent } from './basket-sammary/basket-sammary.componen
   imports: [
     CommonModule,
     PaginationModule.forRoot(),
-    CarouselModule.forRoot()
+    CarouselModule.forRoot(),
+    BsDropdownModule.forRoot()
+
   ],
   exports:[
     PaginationModule,
@@ -26,7 +28,8 @@ import { BasketSammaryComponent } from './basket-sammary/basket-sammary.componen
     PaginHeaderComponent,
     CarouselModule,
     OrderTotalsComponent,
-    BasketSammaryComponent
+    BasketSammaryComponent,
+    BsDropdownModule
   ]
 })
 export class SharedModule { }

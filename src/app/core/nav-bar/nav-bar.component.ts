@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AccountService } from 'src/app/account/account.service';
 import { BasketService } from 'src/app/basket/basket.service';
 
 @Component({
@@ -10,8 +11,9 @@ export class NavBarComponent {
   /**
    *
    */
+
   Count = 0;
-  constructor(public basketService:BasketService) {
+  constructor(public basketService:BasketService,public accountService:AccountService) {
     this.basketService.getBasket("ffa80053-73ae-4ee6-a1fa-866ede17457d");
     this.getCount()
   }

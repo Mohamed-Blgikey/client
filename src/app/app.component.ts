@@ -1,3 +1,4 @@
+import { AccountService } from './account/account.service';
 import { BasketService } from './basket/basket.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
@@ -15,10 +16,11 @@ export class AppComponent implements OnInit {
    *
    */
   Product:Product[]=[];
-  constructor(private _http:HttpClient,private _BasketService:BasketService) {  }
+  constructor(private _http:HttpClient,private _BasketService:BasketService,private _AccountService:AccountService) {  }
   ngOnInit(): void {
-    this._BasketService.basketSource$.subscribe(res=>{
-    })
+    if (localStorage.getItem("token") !=null) {
+      this._AccountService.loadCurrentUser(localStorage.getItem("token")).subscribe();
+    }
 
   }
 }
