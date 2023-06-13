@@ -6,21 +6,26 @@ import { PaginHeaderComponent } from './pagin-header/pagin-header.component'
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { OrderTotalsComponent } from './order-totals/order-totals.component';
 import { BasketSammaryComponent } from './basket-sammary/basket-sammary.component'
-import {BsDropdownModule} from 'ngx-bootstrap/dropdown'
+import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
+import { StepperComponent } from './components/stepper/stepper.component'
+import {CdkStepperModule} from '@angular/cdk/stepper'
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     PagerComponent,
     PaginHeaderComponent,
     OrderTotalsComponent,
-    BasketSammaryComponent
+    BasketSammaryComponent,
+    StepperComponent,
   ],
   imports: [
     CommonModule,
     PaginationModule.forRoot(),
     CarouselModule.forRoot(),
-    BsDropdownModule.forRoot()
-
+    BsDropdownModule.forRoot(),
+    CdkStepperModule,
+    ReactiveFormsModule
   ],
   exports:[
     PaginationModule,
@@ -29,7 +34,10 @@ import {BsDropdownModule} from 'ngx-bootstrap/dropdown'
     CarouselModule,
     OrderTotalsComponent,
     BasketSammaryComponent,
-    BsDropdownModule
+    BsDropdownModule,
+    CdkStepperModule,
+    StepperComponent,
+    ReactiveFormsModule
   ]
 })
 export class SharedModule { }

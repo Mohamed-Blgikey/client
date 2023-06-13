@@ -1,8 +1,8 @@
 import { BaseUrl } from 'src/app/shared/models/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, of } from 'rxjs';
-import { User } from '../shared/models/user';
+import { BehaviorSubject, map, of, ReplaySubject } from 'rxjs';
+import { Address, User } from '../shared/models/user';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class AccountService {
 
   baseUrl = BaseUrl;
-  private CurrentUserSource = new BehaviorSubject<User|null>(null);
+  private CurrentUserSource = new ReplaySubject<User|null>(1);
   CurrentUserSource$ = this.CurrentUserSource.asObservable();
   constructor(private _HttpClient:HttpClient,private _Router:Router) { }
 
@@ -69,5 +69,15 @@ export class AccountService {
 
   checkEmailExsits(email:string){
     return this._HttpClient.get<boolean>(this.baseUrl+`Auth/emailexists?email=${email}`)
+  }
+
+
+  getUserAddress()
+  {
+    return this._HttpClient.get<Address>(this.baseUrl+'Auth/address');
+  }
+  updateUserAddress(address:Address)
+  {
+   return this._HttpClient.post(this.baseUrl+'Auth/address',address);
   }
 }

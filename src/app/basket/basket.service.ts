@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { Basket, BasketItem, BasketTotal } from '../shared/models/basket-item';
 import { Product } from '../shared/models/Product';
 import { BusyService } from '../core/services/busy.service';
+import { DeliveryMethod } from '../shared/models/DeliveryMethod';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ import { BusyService } from '../core/services/busy.service';
 export class BasketService {
 
   baseUel:string = BaseUrl;
-  private basketSource = new BehaviorSubject<BasketItem[]|null>([]);
+  private basketSource = new BehaviorSubject<Basket|null>(null);
   basketSource$ = this.basketSource.asObservable();
 
   private basketTotalSource = new BehaviorSubject<BasketTotal|null>(null);
@@ -24,9 +25,17 @@ export class BasketService {
     this.loadService.busy();
     this._HttpClient.get<BasketItem[]>(`${this.baseUel}Basket?userId=${id}`).subscribe({
       next:res=>{
-        console.log(res);
-        this.basketSource.next(res);
-        this.calculateTotals()
+        if (res.length > 0) {
+          let x = {
+            Id :res[0].userId,
+            items : res
+          }
+          this.basketSource.next(x as Basket);
+          this.calculateTotals()
+
+        }else{
+          this.basketSource.next(null);
+        }
       }
     })
   }
@@ -68,13 +77,10 @@ export class BasketService {
   private calculateTotals()
   {
     const basket =this.getCurrentBsketValue();
-    console.log("basket is ")
-    console.log(basket)
     if(!basket) return;
-    let shipping = 0;
-    const subtotal= basket.reduce((a,b)=>(b.price*b.quantity)+a,0);
-    const total=subtotal+shipping;
-    this.basketTotalSource.next({shipping:shipping,subTotal:subtotal,Total:total});
+    const subtotal= basket.items.reduce((a,b)=>(b.price*b.quantity)+a,0);
+    const total=subtotal+basket.shippingPrice;
+    this.basketTotalSource.next({shipping:basket.shippingPrice,subTotal:subtotal,Total:total});
   }
 
 
@@ -87,4 +93,23 @@ export class BasketService {
       }
     })
   }
+
+  setShippingPrice(deliveryMethod:DeliveryMethod)
+  {
+    const basket= this.getCurrentBsketValue();
+
+    if(basket)
+    {
+      basket.shippingPrice=deliveryMethod.price;
+      basket.deliveryMethodId=deliveryMethod.id;
+      this.setBasket(basket);
+    }
+    this.calculateTotals();
+  }
+
+  setBasket(basket: Basket) {
+    this.basketSource.next(basket);
+    this.calculateTotals();
+  }
+
 }

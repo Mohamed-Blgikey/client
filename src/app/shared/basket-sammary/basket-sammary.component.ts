@@ -11,7 +11,7 @@ export class BasketSammaryComponent {
   @Output() addItem = new EventEmitter<BasketItem>();
   @Output() removeItem = new EventEmitter<{id:number,quantity:number}>();
 
-  @Input() isBasket= true;
+  @Input() isBasket!:boolean;
    constructor(public basketService:BasketService) { }
 
 
@@ -24,4 +24,5 @@ export class BasketSammaryComponent {
    {
      this.removeItem.emit(item);
    }
+
 }

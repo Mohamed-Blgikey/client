@@ -10,7 +10,7 @@
           </tr>
       </thead>
       <tbody>
-          <tr *ngFor="let item of basket">
+          <tr *ngFor="let item of basket.items">
               <th>
                   <div class="p-2 d-inline-block">
                       <img src="{{item.photoUrl}}"
@@ -20,9 +20,9 @@
                       >
                       <div class="ms-3 d-inline-block align-middle">
                           <h5 class="mb-0">
-                              <a routerLink="/shop/8" class="text-dark text-decoration-none">
+                              <!-- <a routerLink="/shop/{{item.id}}" class="text-dark text-decoration-none">
                                   {{item.productName}}
-                              </a>
+                              </a> -->
                           </h5>
                           <span class="text-muted fst-italic">
                               Type: {{item.type}}

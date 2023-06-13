@@ -1,6 +1,6 @@
 <div class="container mt-5">
   <div *ngIf="(basketService.basketSource$ | async) as t ">
-    <div *ngIf="t.length == 0">
+    <div *ngIf="t.items.length == 0">
       <p>There are no items in your basket</p>
     </div>
   </div>
@@ -9,6 +9,7 @@
       <div class="container">
           <div class="row">
               <app-basket-sammary
+              [isBasket]="true"
               (addItem)="incrementQuantity($event)"
                 (removeItem)="removeItem($event)"
                 >

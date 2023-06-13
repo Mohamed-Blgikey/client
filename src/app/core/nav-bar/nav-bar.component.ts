@@ -20,12 +20,10 @@ export class NavBarComponent {
   getCount(){
     this.basketService.basketSource$.subscribe({
       next:res=>{
-        console.log(res);
 
-        this.Count = res?.reduce((sum,item)=>sum+item.quantity,0)?? 0;
+        this.Count = res?.items?.reduce((sum,item)=>sum+item.quantity,0)?? 0;
       },
       complete:()=>{
-        console.log(this.Count);
 
       }
     })
