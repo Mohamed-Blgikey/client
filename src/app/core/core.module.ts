@@ -34,7 +34,8 @@ import { SharedModule } from '../shared/shared.module';
   exports:[
     NavBarComponent,
     SectionHeaderComponent,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    SweetAlert2Module
   ]
 })
 export class CoreModule { }
